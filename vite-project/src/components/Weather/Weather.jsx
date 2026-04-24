@@ -1,32 +1,49 @@
+import React from "react";
+import {
+  Card,
+  Header,
+  City,
+  Country,
+  Time,
+  Temp,
+  Description,
+  Icon
+} from "./Weather.styles";
 
+const WeatherCard = ({ weather, time }) => {
+  if (!weather) return null;
 
+  const getCityTime = () => {
+    const utc = time.getTime() + time.getTimezoneOffset() * 60000;
+    return new Date(utc + weather.timezone * 1000);
+  };
 
-const WeatherCard = () => {
-    return (
-        <div className="weather-card">
-            <div className="weather-header">
-                <span>Prague</span>
-                <span>Czech Republic</span>
-            </div>
+  const cityTime = getCityTime();
 
-            <h2 className="time">14:00</h2>
+  return (
+    <Card>
+      <Header>
+        <City>{weather.name}</City>
+        <Country>{weather.country}</Country>
+      </Header>
 
-            <button className="btn small">Hourly forecast</button>
+      <Time>
+        {cityTime.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit"
+        })}
+      </Time>
 
-            <p className="date">13.10.2023  Friday</p>
+      {/* <Icon
+        src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+        alt=""
+      /> */}
 
-            <div className="icon"></div>
+      <Temp>{weather.temp}°C</Temp>
 
-            <h3 className="temp">22</h3>
-
-            <div className="weather-actions">
-                <img src="" alt="" />
-                <img src="" alt="" />
-                <button className="btn">See more</button>
-                <img src="" alt="" />
-            </div>
-        </div>
-    );
+      <Description>{weather.description}</Description>
+    </Card>
+  );
 };
 
 export default WeatherCard;

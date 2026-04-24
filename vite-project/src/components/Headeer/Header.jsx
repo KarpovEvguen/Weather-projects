@@ -1,22 +1,29 @@
-
-
-
+import { useState } from "react";
+import {
+  HeaderWrapper,
+  Logo,
+  Nav,
+  NavLink,
+  Signup,
+  SignupLink
+} from "./Header.style"
 
 export default function Header() {
-    return (
-        <>
-            <header>
-                <img src="" alt="" className="logo"/>
-                <nav className="header__nav">
-                    <button onClick={() => setFlex('flex')} href="" className="header__nav-link">Who we are</button>
-                    <button onClick={() => setFlex('flex')} href="" className="header__nav-link">Contacts</button>
-                    <button onClick={() => setFlex('flex')} href="" className="header__nav-link">Menu</button>
-                    <button onClick={() => setFlex('flex')} href="" className="header__nav-link">contact us</button>
-                </nav>
-                <div className="header__signup">
-                            <a href="" className="header__signup-link">Sign up</a>
-                        </div>
-            </header>
-        </>
-    )
+  const [flex, setFlex] = useState("");
+
+  return (
+    <HeaderWrapper>
+        <Logo src="" alt="" />
+      <Nav>
+        <NavLink onClick={() => setFlex("flex")}>Who we are</NavLink>
+        <NavLink onClick={() => setFlex("flex")}>Contacts</NavLink>
+        <NavLink onClick={() => setFlex("flex")}>Menu</NavLink>
+        <NavLink onClick={() => setFlex("flex")}>Contact us</NavLink>
+      </Nav>
+
+      <Signup>
+        <SignupLink href="#">Sign up</SignupLink>
+      </Signup>
+    </HeaderWrapper>
+  );
 }

@@ -45,7 +45,7 @@ export const Divider = styled.div`
   background: #fff;
 `;
 
-export const Date = styled.p`
+export const Date_p = styled.p`
   font-size: 18px;
 `;
 
