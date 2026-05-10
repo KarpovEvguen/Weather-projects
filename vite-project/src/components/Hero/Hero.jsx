@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { getWeatherByCity, get7DaysForecast } from "../Weather/ApiWeather";
+import CharacteristicWeather from "../WeatherDetails/CharacteristicWeather";
 import {
   HeroWrapper,
   Overlay,
@@ -10,16 +12,32 @@ import {
   Date_p,
   Search,
   Input,
-  SearchBtn
+  SearchBtn,
+  WeatherInfo,
+  CityName,
+  Temperature,
+  Description,
+  WeatherIcon
 } from "./Hero.styles";
-
-const API_KEY = import.meta.env.VITE_WEATHER_KEY;
 
 const Hero = () => {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
   const [time, setTime] = useState(new Date());
   const [error, setError] = useState("");
+
+  const weatherCodes = {
+    0: "☀️",
+    1: "🌤️",
+    2: "⛅",
+    3: "☁️",
+    45: "🌫️",
+    61: "🌧️",
+    71: "❄️",
+    80: "🌦️",
+    95: "⛈️"
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -34,25 +52,11 @@ const Hero = () => {
 
     try {
       setError("");
+      const data = await getWeatherByCity(city);
+      setWeather(data);
 
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
-      );
-
-      if (!res.ok) {
-        throw new Error("City not found");
-      }
-
-      const data = await res.json();
-
-      setWeather({
-        name: data.name,
-        country: data.sys.country,
-        temp: Math.round(data.main.temp),
-        description: data.weather[0].description,
-        icon: data.weather[0].icon,
-        timezone: data.timezone,
-      });
+      const daily = await get7DaysForecast(data.lat, data.lon);
+      setForecast(daily);
 
     } catch (err) {
       setWeather(null);
@@ -134,6 +138,41 @@ const Hero = () => {
             {error}
           </p>
         )}
+
+        {weather && (
+          <WeatherInfo>
+            {forecast && (
+              <div style={{ marginTop: "30px", color: "white" }}>
+                {forecast.time.map((day, i) => (
+                  <div key={i}>
+                    {new Date(day).toLocaleDateString("en-GB", {
+                      weekday: "short",
+                      day: "numeric",
+                      month: "short"
+                    })} —
+                    {Math.round(forecast.temperature_2m_max[i])}° /
+                    {Math.round(forecast.temperature_2m_min[i])}°
+                    {weatherCodes[forecast.weathercode[i]]}
+                  </div>
+                ))}
+              </div>
+            )}
+            <CityName>{weather.name}, {weather.country}</CityName>
+            <WeatherIcon
+              src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+              alt={weather.description}
+            />
+            <Temperature>{weather.temp}°C</Temperature>
+            <Description>{weather.description}</Description>
+          </WeatherInfo>
+        )}
+         {weather && forecast && (
+        <CharacteristicWeather 
+          weather={weather}
+          forecast={forecast}
+        />
+      )}
+
       </Content>
     </HeroWrapper>
   );

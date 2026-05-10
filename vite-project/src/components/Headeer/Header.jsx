@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from '/src/img/logo.png'
 import {
   HeaderWrapper,
   Logo,
@@ -13,7 +14,7 @@ export default function Header() {
 
   return (
     <HeaderWrapper>
-        <Logo src="" alt="" />
+        <Logo src={logo} alt="" />
       <Nav>
         <NavLink onClick={() => setFlex("flex")}>Who we are</NavLink>
         <NavLink onClick={() => setFlex("flex")}>Contacts</NavLink>

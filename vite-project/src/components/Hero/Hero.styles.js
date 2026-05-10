@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const HeroWrapper = styled.section`
+background-image: url('/src/img/cat.jpg');
+background-size: cover;
+background-position: center;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -61,6 +65,36 @@ export const Input = styled.input`
   border: none;
   border-radius: 10px 0 0 10px;
   outline: none;
+`;
+
+export const WeatherInfo = styled.div`
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+`;
+
+export const CityName = styled.h2`
+  font-size: 32px;
+  margin-bottom: 10px;
+`;
+
+export const Temperature = styled.div`
+  font-size: 48px;
+  font-weight: bold;
+  margin: 15px 0;
+`;
+
+export const Description = styled.p`
+  font-size: 18px;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+`;
+
+export const WeatherIcon = styled.img`
+  width: 80px;
+  height: 80px;
 `;
 
 export const SearchBtn = styled.button`
