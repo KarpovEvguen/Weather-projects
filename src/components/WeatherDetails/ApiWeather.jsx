@@ -2,7 +2,7 @@ const API_KEY = import.meta.env.VITE_WEATHER_KEY;
 
 export const getWeatherByCity = async (city) => {
   const res = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${API_KEY}`
   );
 
   if (!res.ok) {
@@ -15,17 +15,24 @@ export const getWeatherByCity = async (city) => {
     name: data.name,
     country: data.sys.country,
     temp: Math.round(data.main.temp),
+    feels_like: data.main.feels_like,
+    temp_min: data.main.temp_min,
+    temp_max: data.main.temp_max,
+    humidity: data.main.humidity,
+    pressure: data.main.pressure,
+    wind: data.wind.speed,
+    visibility: data.visibility,
     description: data.weather[0].description,
     icon: data.weather[0].icon,
     timezone: data.timezone,
-    lat: data.coord.lat,     
-    lon: data.coord.lon,     
+    lat: data.coord.lat,
+    lon: data.coord.lon,
   };
 };
 
 export const get7DaysForecast = async (lat, lon) => {
   const res = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto&forecast_days=7`
   );
 
   if (!res.ok) {

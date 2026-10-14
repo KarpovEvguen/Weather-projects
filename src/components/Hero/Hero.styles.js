@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import catImage from "../../img/cat.jpg";
 
 export const HeroWrapper = styled.section`
-background-image: url('/src/img/cat.jpg');
+background-image: url(${catImage});
 background-size: cover;
 background-position: center;
 

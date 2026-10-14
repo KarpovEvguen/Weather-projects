@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getWeatherByCity, get7DaysForecast } from "../Weather/ApiWeather";
+import { getWeatherByCity, get7DaysForecast } from "../WeatherDetails/ApiWeather";
 import CharacteristicWeather from "../WeatherDetails/CharacteristicWeather";
 import {
   HeroWrapper,
@@ -152,7 +152,7 @@ const Hero = () => {
                     })} —
                     {Math.round(forecast.temperature_2m_max[i])}° /
                     {Math.round(forecast.temperature_2m_min[i])}°
-                    {weatherCodes[forecast.weathercode[i]]}
+                    {weatherCodes[forecast.weather_code[i]]}
                   </div>
                 ))}
               </div>
